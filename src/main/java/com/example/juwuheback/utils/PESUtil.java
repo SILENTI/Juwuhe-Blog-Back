@@ -1,4 +1,4 @@
-package com.sxshkj.weight.util;
+package com.example.juwuheback.utils;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKeyFactory;

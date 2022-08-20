@@ -1,5 +1,7 @@
-package com.example.juwuheback.common;
+package com.example.juwuheback.common.config;
 
 public class LoginConfig {
-    private static String PASSWORD = "/LR6UDdnkCQULOxJWXltQQ==";
+
+    public static final String PASSWORD = "/LR6UDdnkCQULOxJWXltQQ==";
+
 }

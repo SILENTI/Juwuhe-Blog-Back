@@ -1,6 +1,9 @@
 package com.example.juwuheback.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -16,22 +19,17 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@ApiModel(value = "Classify对象", description = "")
-public class Classify implements Serializable {
+@TableName("articles_classify")
+@ApiModel(value = "ArticlesClassify对象", description = "")
+public class ArticlesClassify implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty("文章ID")
+    private Integer articleId;
+
     @ApiModelProperty("分类ID")
     private Integer classifyId;
-
-    @ApiModelProperty("分类名称")
-    private String classifyName;
-
-    @ApiModelProperty("父分类ID")
-    private Integer parentClassifyId;
-
-    @ApiModelProperty("分类描述")
-    private String classifyDescription;
 
 
 }

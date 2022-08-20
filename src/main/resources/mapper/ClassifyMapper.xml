@@ -3,11 +3,11 @@
 <mapper namespace="com.example.juwuheback.mapper.ClassifyMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.example.juwuheback.entity.Classify">
-        <id column="classify_id" property="classifyId" />
-        <result column="classify_name" property="classifyName" />
-        <result column="parent_classify_id" property="parentClassifyId" />
-        <result column="classify_description" property="classifyDescription" />
+    <resultMap id="BaseResultMap" type="com.example.juwuheback.domain.entity.Classify">
+        <id column="classify_id" property="classifyId"/>
+        <result column="classify_name" property="classifyName"/>
+        <result column="parent_classify_id" property="parentClassifyId"/>
+        <result column="classify_description" property="classifyDescription"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

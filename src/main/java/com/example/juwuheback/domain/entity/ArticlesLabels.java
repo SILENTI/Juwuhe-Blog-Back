@@ -2,7 +2,10 @@ package com.example.juwuheback.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -18,20 +21,17 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@ApiModel(value = "Labels对象", description = "")
-public class Labels implements Serializable {
+@TableName("articles_labels")
+@ApiModel(value = "ArticlesLabels对象", description = "")
+public class ArticlesLabels implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("标签ID")
-    @TableId(value = "label_id", type = IdType.AUTO)
-    private Integer labelId;
+    @ApiModelProperty("文章ID")
+    @TableId(value = "article_id", type = IdType.AUTO)
+    private Long articleId;
 
-    @ApiModelProperty("标签名称")
-    private String labelName;
-
-    @ApiModelProperty("标签描述")
-    private String labelDescription;
+    private Long labelId;
 
 
 }

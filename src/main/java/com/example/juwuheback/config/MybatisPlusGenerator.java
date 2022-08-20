@@ -1,4 +1,4 @@
-package com.example.generalbase.config;
+package com.example.juwuheback.config;
 
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
@@ -13,10 +13,27 @@ import java.util.Collections;
  */
 public class MybatisPlusGenerator {
 
+    private String url = "jdbc:mysql://112.126.64.206/juwuhe-blog?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8";
+
+    private String userName = "root";
+
+    private String passWord = "xishi145678";
+
+    private String authorName = "居無何";
+
+    private String packagePath = "com.example.juwuheback";
+
+    private String xmlPath = "D:\\PROJECT\\MyProject\\BackEnd\\juwuhe-back\\src\\main";
+
     public static void main(String[] args) {
-        FastAutoGenerator.create("jdbc:mysql://localhost:3306/base_test?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8", "root", "root").globalConfig(builder -> {
+        MybatisPlusGenerator mybatisPlusGenerator = new MybatisPlusGenerator();
+        mybatisPlusGenerator.main("articles_labels");
+    }
+
+    public void main(String tableName) {
+        FastAutoGenerator.create(url, userName, passWord).globalConfig(builder -> {
                     //全局配置
-                    builder.author("SILENTI") // 设置作者
+                    builder.author(authorName) // 设置作者
                             // 禁止打开生成目录
                             .disableOpenDir()
                             // 开启 swagger 模式
@@ -24,29 +41,29 @@ public class MybatisPlusGenerator {
                             // 覆盖已生成文件
                             .fileOverride()
                             // 时间配置
-                            .dateType(DateType.TIME_PACK).commentDate("yyyy-MM-dd").outputDir("D:\\PROJECT\\GeneralBase\\src\\main\\java"); // 指定输出目录
+                            .dateType(DateType.TIME_PACK).commentDate("yyyy-MM-dd").outputDir(xmlPath + "\\java"); // 指定输出目录
                 })
                 //包配置
                 .packageConfig(builder -> {
                     // 设置父包名
-                    builder.parent("com.example.generalbase")
+                    builder.parent(packagePath)
                             // 设置父包模块名
-                            .moduleName("")
+//                            .moduleName("model")
                             // 实体类包名
                             .entity("entity")
                             // 服务层
-                            .service("service").serviceImpl("service.Impl")
+                            .service("service")/*.serviceImpl("service.Impl")*/
                             // 控制层
                             .controller("controller")
                             // mapper层
                             .mapper("mapper")
                             //xml配置文件
 //                            .xml("mapper.xml")
-                            .pathInfo(Collections.singletonMap(OutputFile.xml, "D:\\PROJECT\\GeneralBase\\src\\main\\resources\\mapper")); // 设置mapperXml生成路径
+                            .pathInfo(Collections.singletonMap(OutputFile.xml, xmlPath + "\\resources\\mapper")); // 设置mapperXml生成路径
                 }).strategyConfig(builder -> {
                     // 设置需要生成的表名
-                    builder.addInclude("user")
-                            // .addTablePrefix("t_", "c_"); // 设置过滤表前缀
+                    builder.addInclude(tableName)
+                            .addTablePrefix("t_", "c_") // 设置过滤表前缀
                             // 开启Controller策略配置
                             .controllerBuilder()
                             //开启生成@RestController 控制器
@@ -67,7 +84,6 @@ public class MybatisPlusGenerator {
                             .enableBaseColumnList();
                 }).templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .execute();
-
     }
 
 }

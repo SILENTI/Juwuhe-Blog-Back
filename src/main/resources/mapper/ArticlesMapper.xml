@@ -3,20 +3,38 @@
 <mapper namespace="com.example.juwuheback.mapper.ArticlesMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.example.juwuheback.entity.Articles">
-        <id column="article_id" property="articleId" />
-        <result column="user_id" property="userId" />
-        <result column="article_title" property="articleTitle" />
-        <result column="article_content" property="articleContent" />
-        <result column="article_views" property="articleViews" />
-        <result column="article_comment_count" property="articleCommentCount" />
-        <result column="article_date" property="articleDate" />
-        <result column="article_like_count" property="articleLikeCount" />
+    <resultMap id="ArticlesVOMap" type="com.example.juwuheback.domain.vo.ArticlesVO">
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        article_id, user_id, article_title, article_content, article_views, article_comment_count, article_date, article_like_count
+        art
+        .
+        article_id
+        ,
+        art.article_title,
+        art.article_content,
+        art.article_views,
+        art.article_comment_count,
+        art.article_date
     </sql>
+
+    <select id="selectAllArticles" resultMap="ArticlesVOMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from
+        articles art
+        <where>
+            <if test=" articlesDTO.articleId != null ">
+                and art.article_id = #{articlesDTO.articleId}
+            </if>
+            <if test=" articlesDTO.articleId != null ">
+                and art.article_id like ('%'#{articlesDTO.articleId}'%')
+            </if>
+            <if test=" articlesDTO.startTime != null and articlesDTO.endTime != null">
+                and art.article_date between #{articlesDTO.startTime} and #{articlesDTO.endTime}
+            </if>
+        </where>
+    </select>
 
 </mapper>
