@@ -6,7 +6,7 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class AdminDTO {
+public class UserDTO {
 
     @NotBlank(message = "账号不能为NULL")
     @ApiModelProperty("账号")

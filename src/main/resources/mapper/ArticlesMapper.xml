@@ -3,11 +3,15 @@
 <mapper namespace="com.example.juwuheback.mapper.ArticlesMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="ArticlesVOMap" type="com.example.juwuheback.domain.vo.ArticlesVO">
+    <resultMap id="ArticlesVOMap" type="com.example.juwuheback.domain.vo.ArticlesVO" autoMapping="true">
+        <id column="article_id" property="articleId"/>
+        <collection property="labelsVOList" ofType="com.example.juwuheback.domain.vo.LabelsVO" autoMapping="true">
+            <id column="label_id" property="labelId"/>
+        </collection>
     </resultMap>
 
     <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
+    <sql id="Articles_Column_List">
         art
         .
         article_id
@@ -18,12 +22,29 @@
         art.article_comment_count,
         art.article_date
     </sql>
+    <sql id="Label_Column_List">
+        la
+        .
+        label_id
+        ,
+        la.label_name,
+        la.label_description
+    </sql>
 
     <select id="selectAllArticles" resultMap="ArticlesVOMap">
-        select
-        <include refid="Base_Column_List"></include>
-        from
-        articles art
+        SELECT
+        <include refid="Articles_Column_List"></include>,
+        <include refid="Label_Column_List"></include>
+        FROM
+        articles AS art
+        LEFT JOIN
+        articles_labels
+        ON
+        art.article_id = articles_labels.article_id
+        LEFT JOIN
+        labels AS la
+        ON
+        articles_labels.label_id = la.label_id
         <where>
             <if test=" articlesDTO.articleId != null ">
                 and art.article_id = #{articlesDTO.articleId}
@@ -34,7 +55,44 @@
             <if test=" articlesDTO.startTime != null and articlesDTO.endTime != null">
                 and art.article_date between #{articlesDTO.startTime} and #{articlesDTO.endTime}
             </if>
+            <if test=" articlesDTO.labelName != null ">
+                and la.label_name like ('%'#{articlesDTO.labelName}'%')
+            </if>
         </where>
+    </select>
+
+
+    <select id="selectAllByLabel" resultMap="ArticlesVOMap">
+        SELECT
+        <include refid="Articles_Column_List"></include>,
+        <include refid="Label_Column_List"></include>
+        FROM
+        articles AS art
+        LEFT JOIN
+        articles_labels
+        ON
+        art.article_id = articles_labels.article_id
+        LEFT JOIN
+        labels AS la
+        ON
+        articles_labels.label_id = la.label_id
+        <where>
+            <if test=" articlesDTO.labelId != null ">
+                art.article_id IN
+                (
+                SELECT
+                al.article_id
+                FROM
+                articles_labels al
+                WHERE
+                al.label_id = #{articlesDTO.labelId}
+                )
+            </if>
+            <if test=" articlesDTO.labelName != null ">
+                and la.label_name = #{articlesDTO.labelName}
+            </if>
+        </where>
+        ORDER BY art.article_date DESC
     </select>
 
 </mapper>

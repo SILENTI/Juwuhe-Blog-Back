@@ -12,7 +12,7 @@ public class ResponseDTO<T> {
 
     private boolean success;
 
-    private T date;
+    private T data;
 
     public ResponseDTO() {
     }
@@ -23,11 +23,11 @@ public class ResponseDTO<T> {
         this.success = success;
     }
 
-    public ResponseDTO(Integer code, String message, boolean success, T date) {
+    public ResponseDTO(Integer code, String message, boolean success, T data) {
         this.code = code;
         this.message = message;
         this.success = success;
-        this.date = date;
+        this.data = data;
     }
 
     public ResponseDTO(ExceptionEnum exceptionEnum) {
@@ -72,7 +72,7 @@ public class ResponseDTO<T> {
     }
 
     public ResponseDTO setData(T data) {
-        this.date = data;
+        this.data = data;
         return this;
     }
 

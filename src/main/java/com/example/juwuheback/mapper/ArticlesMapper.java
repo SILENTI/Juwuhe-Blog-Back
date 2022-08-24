@@ -8,6 +8,8 @@ import com.example.juwuheback.domain.vo.ArticlesVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * <p>
  * Mapper 接口
@@ -24,8 +26,17 @@ public interface ArticlesMapper extends BaseMapper<Articles> {
      * 查询条件：博文ID，博文标题（模糊查询），起始时间
      *
      * @param page
-     * @return
+     * @param articlesDTO
+     * @return 博文信息及博文所属标签信息
      */
     Page<ArticlesVO> selectAllArticles(@Param("page") Page page, @Param("articlesDTO") ArticlesDTO articlesDTO);
 
+    /**
+     * 查询博文
+     * 查询条件：标签Id、标签名称
+     *
+     * @param articlesDTO
+     * @return 博文信息及博文所属标签信息
+     */
+    List<ArticlesVO> selectAllByLabel(@Param("articlesDTO") ArticlesDTO articlesDTO);
 }

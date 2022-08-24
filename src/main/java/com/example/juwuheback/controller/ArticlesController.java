@@ -1,8 +1,11 @@
 package com.example.juwuheback.controller;
 
+import com.example.juwuheback.common.action.ArticlesAction;
+import com.example.juwuheback.common.domain.PageResultDTO;
 import com.example.juwuheback.common.domain.ResponseDTO;
 import com.example.juwuheback.domain.dto.ArticlesDTO;
-import com.example.juwuheback.service.impl.ArticlesServiceImpl;
+import com.example.juwuheback.domain.vo.ArticlesVO;
+import com.example.juwuheback.service.IArticlesService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * <p>
  * 前端控制器
@@ -20,18 +25,25 @@ import org.springframework.web.bind.annotation.RestController;
  * @author 居無何
  * @since 2022-08-20
  */
-@Api("博文模块")
+@Api(tags = "博文模块")
 @RestController
 @RequestMapping("/articles")
 public class ArticlesController {
 
     @Autowired
-    private ArticlesServiceImpl articlesServiceImpl;
+    private IArticlesService articlesService;
 
-    @PostMapping("/query")
-    @ApiOperation(value = "分页模糊查询-所有博文")
-    public ResponseDTO queryAllArticles(@RequestBody @Validated ArticlesDTO articlesDTO) {
-        return articlesServiceImpl.queryAll(articlesDTO);
+    @PostMapping("/queryArticlesPage")
+    @ApiOperation(value = "分页模糊查询-所有博文包括标签")
+    public ResponseDTO<PageResultDTO<ArticlesVO>> queryAllArticles(@RequestBody @Validated ArticlesDTO articlesDTO) {
+        return articlesService.queryAll(articlesDTO);
     }
+
+    @PostMapping("/queryArticlesLabel")
+    @ApiOperation(value = "根据标签ID查询-博文信息")
+    public ResponseDTO<List<ArticlesVO>> queryArticlesByLabel(@RequestBody ArticlesDTO articlesDTO) {
+        return articlesService.queryAllByLabel(articlesDTO);
+    }
+
 
 }

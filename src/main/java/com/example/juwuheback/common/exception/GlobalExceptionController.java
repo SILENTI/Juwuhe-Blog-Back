@@ -17,7 +17,6 @@ public class GlobalExceptionController {
      */
     @ExceptionHandler(Exception.class)
     public ResponseDTO ControllerError(Exception e) {
-        e.printStackTrace();
         return new ResponseDTO(ExceptionEnum.SYSTEM_ERROR);
     }
 

@@ -17,7 +17,7 @@ spring:
 
 # 应用服务 WEB 访问端口
 server:
-  port: 8080
+  port: 11528
 
 #Mybatis-plus-日志服务
 mybatis-plus:

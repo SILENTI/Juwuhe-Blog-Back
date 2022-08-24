@@ -27,7 +27,7 @@ public class MybatisPlusGenerator {
 
     public static void main(String[] args) {
         MybatisPlusGenerator mybatisPlusGenerator = new MybatisPlusGenerator();
-        mybatisPlusGenerator.main("articles_labels");
+        mybatisPlusGenerator.main("gallery");
     }
 
     public void main(String tableName) {

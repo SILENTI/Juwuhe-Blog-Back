@@ -3,8 +3,8 @@ package com.example.juwuheback.domain.vo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class ArticlesVO {
@@ -26,5 +26,8 @@ public class ArticlesVO {
 
     @ApiModelProperty("发表时间")
     private Date articleDate;
+
+    @ApiModelProperty("所属标签")
+    private List<LabelsVO> labelsVOList;
 
 }

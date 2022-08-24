@@ -2,7 +2,7 @@ package com.example.juwuheback.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.example.juwuheback.domain.dto.AdminDTO;
+import com.example.juwuheback.domain.dto.UserDTO;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -31,7 +31,7 @@ public class JWTUtil {
      *
      * @return
      */
-    public static String getToken(AdminDTO adminDTO) {
+    public static String getToken(UserDTO userDTO) {
         //token失效时间
         Date expireDate = new Date(System.currentTimeMillis() + EXPIRE_DATE);
         //设置秘钥
@@ -44,7 +44,7 @@ public class JWTUtil {
                 //header头信息
                         withHeader(header).
                 //playload加密内容
-                        withClaim("username", adminDTO.getUsername()).withClaim("password", adminDTO.getPassword()).
+                        withClaim("username", userDTO.getUsername()).withClaim("password", userDTO.getPassword()).
                 //过期时间
                         withExpiresAt(expireDate).
                 //签名-即秘钥

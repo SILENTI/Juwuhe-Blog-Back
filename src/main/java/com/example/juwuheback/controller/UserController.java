@@ -1,9 +1,8 @@
 package com.example.juwuheback.controller;
 
 import com.example.juwuheback.common.domain.ResponseDTO;
-import com.example.juwuheback.domain.dto.AdminDTO;
-import com.example.juwuheback.service.impl.AdminServiceImpl;
-import io.swagger.annotations.Api;
+import com.example.juwuheback.domain.dto.UserDTO;
+import com.example.juwuheback.service.IUserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -18,20 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author 居無何
- * @since 2022-08-19
+ * @since 2022-08-24
  */
-@Api(tags = "管理模块")
 @RestController
-@RequestMapping("/admin")
-public class AdminController {
+@RequestMapping("/user")
+public class UserController {
 
     @Autowired
-    private AdminServiceImpl adminServiceImpl;
+    private IUserService userService;
+
 
     @ApiOperation(value = "用户登录")
     @PostMapping("/login")
-    public ResponseDTO adminLogin(@RequestBody @Validated AdminDTO adminDTO) {
-        return adminServiceImpl.adminLogin(adminDTO);
+    public ResponseDTO adminLogin(@RequestBody @Validated UserDTO userDTO) {
+        return userService.adminLogin(userDTO);
     }
 
 }
