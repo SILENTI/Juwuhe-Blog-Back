@@ -11,10 +11,14 @@ public enum ExceptionEnum {
     SUCCESS(1, "操作成功", true),
     FAIL(2, "操作失败", false),
     SYSTEM_ERROR(3, "系统错误", false),
+
     UNKNOWN_ERROR(4, "未知错误", false),
 
-    /*-------------------- Admin 50-49 --------------------*/
-    ADMIN_USERNAME_PASSWORD_ERROR(50, "用户名或密码错误", false);
+    DATABASE_OPERATION_ERROR(5, "数据库操作失败", false),
+
+    /*-------------------- User 50-49 --------------------*/
+    USER_USERNAME_PASSWORD_ERROR(50, "用户名或密码错误", false),
+    USER_USERNAME_IS_NOT_EXIST_ERROR(50, "当前用户不存在", false);
 
     /**
      * ======================================== 分隔符 ========================================

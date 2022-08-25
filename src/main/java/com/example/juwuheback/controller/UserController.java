@@ -3,6 +3,7 @@ package com.example.juwuheback.controller;
 import com.example.juwuheback.common.domain.ResponseDTO;
 import com.example.juwuheback.domain.dto.UserDTO;
 import com.example.juwuheback.service.IUserService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -19,13 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
  * @author 居無何
  * @since 2022-08-24
  */
+@Api(tags = "用户模块")
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private IUserService userService;
-
 
     @ApiOperation(value = "用户登录")
     @PostMapping("/login")

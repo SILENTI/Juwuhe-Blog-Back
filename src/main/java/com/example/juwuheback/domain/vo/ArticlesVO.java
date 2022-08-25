@@ -15,6 +15,12 @@ public class ArticlesVO {
     @ApiModelProperty("博文标题")
     private String articleTitle;
 
+    @ApiModelProperty("博文封面")
+    private String articleImg;
+
+    @ApiModelProperty("博文描述")
+    private String articleDescription;
+
     @ApiModelProperty("博文内容")
     private String articleContent;
 
@@ -28,6 +34,6 @@ public class ArticlesVO {
     private Date articleDate;
 
     @ApiModelProperty("所属标签")
-    private List<LabelsVO> labelsVOList;
+    private List<LabelVO> labelVOList;
 
 }

@@ -1,6 +1,6 @@
 package com.example.juwuheback.mapper;
 
-import com.example.juwuheback.domain.entity.Labels;
+import com.example.juwuheback.domain.entity.Label;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2022-08-20
  */
 @Mapper
-public interface LabelsMapper extends BaseMapper<Labels> {
+public interface LabelsMapper extends BaseMapper<Label> {
 
 }

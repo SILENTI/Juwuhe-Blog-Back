@@ -1,7 +1,7 @@
 package com.example.juwuheback.controller;
 
 import com.example.juwuheback.common.domain.ResponseDTO;
-import com.example.juwuheback.domain.vo.LabelsVO;
+import com.example.juwuheback.domain.vo.LabelVO;
 import com.example.juwuheback.service.ILabelsService;
 import com.example.juwuheback.utils.SmartBeanUtil;
 import io.swagger.annotations.Api;
@@ -32,9 +32,9 @@ public class LabelsController {
 
     @ApiOperation(value = "查询所有标签")
     @PostMapping("/queryAll")
-    public ResponseDTO<List<LabelsVO>> queryAll() {
-        List<LabelsVO> labelsVOList = SmartBeanUtil.copyList(labelsService.list(), LabelsVO.class);
-        return ResponseDTO.success(labelsVOList);
+    public ResponseDTO<List<LabelVO>> queryAll() {
+        List<LabelVO> labelVOList = SmartBeanUtil.copyList(labelsService.list(), LabelVO.class);
+        return ResponseDTO.success(labelVOList);
     }
 
 }

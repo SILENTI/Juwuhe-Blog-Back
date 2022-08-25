@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="ArticlesVOMap" type="com.example.juwuheback.domain.vo.ArticlesVO" autoMapping="true">
         <id column="article_id" property="articleId"/>
-        <collection property="labelsVOList" ofType="com.example.juwuheback.domain.vo.LabelsVO" autoMapping="true">
+        <collection property="labelVOList" ofType="com.example.juwuheback.domain.vo.LabelVO" autoMapping="true">
             <id column="label_id" property="labelId"/>
         </collection>
     </resultMap>
@@ -31,6 +31,23 @@
         la.label_description
     </sql>
 
+    <insert id="insertArticlesLabel">
+        insert into
+        articles_label (article_id,label_id)
+        values
+        <foreach item="item" collection="labelList" separator=",">
+            (
+            #{articlesId},
+            #{item}
+            )
+        </foreach>
+    </insert>
+
+    <insert id="insertArticlesClassify">
+        insert into articles_classify (article_id, classify_id)
+        values (#{articlesId}, #{articlesId})
+    </insert>
+
     <select id="selectAllArticles" resultMap="ArticlesVOMap">
         SELECT
         <include refid="Articles_Column_List"></include>,
@@ -38,25 +55,25 @@
         FROM
         articles AS art
         LEFT JOIN
-        articles_labels
+        articles_label
         ON
-        art.article_id = articles_labels.article_id
+        art.article_id = articles_label.article_id
         LEFT JOIN
         labels AS la
         ON
-        articles_labels.label_id = la.label_id
+        articles_label.label_id = la.label_id
         <where>
-            <if test=" articlesDTO.articleId != null ">
-                and art.article_id = #{articlesDTO.articleId}
+            <if test=" articlesQueryDTO.articleId != null ">
+                and art.article_id = #{articlesQueryDTO.articleId}
             </if>
-            <if test=" articlesDTO.articleId != null ">
-                and art.article_id like ('%'#{articlesDTO.articleId}'%')
+            <if test=" articlesQueryDTO.articleId != null ">
+                and art.article_id like ('%'#{articlesQueryDTO.articleId}'%')
             </if>
-            <if test=" articlesDTO.startTime != null and articlesDTO.endTime != null">
-                and art.article_date between #{articlesDTO.startTime} and #{articlesDTO.endTime}
+            <if test=" articlesQueryDTO.startTime != null and articlesQueryDTO.endTime != null">
+                and art.article_date between #{articlesQueryDTO.startTime} and #{articlesQueryDTO.endTime}
             </if>
-            <if test=" articlesDTO.labelName != null ">
-                and la.label_name like ('%'#{articlesDTO.labelName}'%')
+            <if test=" articlesQueryDTO.labelName != null ">
+                and la.label_name like ('%'#{articlesQueryDTO.labelName}'%')
             </if>
         </where>
     </select>
@@ -69,27 +86,27 @@
         FROM
         articles AS art
         LEFT JOIN
-        articles_labels
+        articles_label
         ON
-        art.article_id = articles_labels.article_id
+        art.article_id = articles_label.article_id
         LEFT JOIN
         labels AS la
         ON
-        articles_labels.label_id = la.label_id
+        articles_label.label_id = la.label_id
         <where>
-            <if test=" articlesDTO.labelId != null ">
+            <if test=" articlesQueryDTO.labelId != null ">
                 art.article_id IN
                 (
                 SELECT
                 al.article_id
                 FROM
-                articles_labels al
+                articles_label al
                 WHERE
-                al.label_id = #{articlesDTO.labelId}
+                al.label_id = #{articlesQueryDTO.labelId}
                 )
             </if>
-            <if test=" articlesDTO.labelName != null ">
-                and la.label_name = #{articlesDTO.labelName}
+            <if test=" articlesQueryDTO.labelName != null ">
+                and la.label_name = #{articlesQueryDTO.labelName}
             </if>
         </where>
         ORDER BY art.article_date DESC

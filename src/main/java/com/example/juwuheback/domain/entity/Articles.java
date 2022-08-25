@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -38,6 +39,12 @@ public class Articles implements Serializable {
     @ApiModelProperty("博文内容")
     private String articleContent;
 
+    @ApiModelProperty("博文封面")
+    private String articleImg;
+
+    @ApiModelProperty("博文描述")
+    private String articleDescription;
+
     @ApiModelProperty("浏览量")
     private Integer articleViews;
 
@@ -45,7 +52,13 @@ public class Articles implements Serializable {
     private Integer articleCommentCount;
 
     @ApiModelProperty("发表时间")
-    private LocalDateTime articleDate;
+    private Date articlePublishDate;
+
+    @ApiModelProperty("发表时间")
+    private Date articleCreateDate;
+
+    @ApiModelProperty("是否发表")
+    private Integer isPublish;
 
 
 }

@@ -19,7 +19,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @ApiModel(value = "Labels对象", description = "")
-public class Labels implements Serializable {
+public class Label implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
