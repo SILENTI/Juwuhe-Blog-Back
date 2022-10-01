@@ -7,6 +7,12 @@ import com.vladsch.flexmark.util.options.MutableDataSet;
 
 public class MdToHtmlUtils {
 
+    /**
+     * 将markdown文件语法转html
+     *
+     * @param md
+     * @return
+     */
     public static String convert(String md) {
         MutableDataSet options = new MutableDataSet();
 
@@ -20,6 +26,6 @@ public class MdToHtmlUtils {
     }
 
     public static void main(String[] args) {
-        System.out.println(MdToHtmlUtils.convert(""));
     }
+
 }

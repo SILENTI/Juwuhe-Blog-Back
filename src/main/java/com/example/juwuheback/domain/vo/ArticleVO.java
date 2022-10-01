@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class ArticlesVO {
+public class ArticleVO {
 
     @ApiModelProperty("博文ID")
     private Integer articleId;
@@ -35,5 +35,8 @@ public class ArticlesVO {
 
     @ApiModelProperty("所属标签")
     private List<LabelVO> labelVOList;
+
+    @ApiModelProperty("是否发布上线")
+    private Integer isPublish;
 
 }

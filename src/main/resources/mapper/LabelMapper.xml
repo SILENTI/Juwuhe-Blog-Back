@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.juwuheback.mapper.LabelsMapper">
+<mapper namespace="com.example.juwuheback.mapper.LabelMapper">
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.example.juwuheback.domain.entity.Label">
@@ -11,7 +11,26 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        label_id, label_name, label_description
+        label_id
+        , label_name, label_description
     </sql>
+
+    <insert id="insertArticleLabel">
+        insert into
+        article_label (article_id,label_id)
+        values
+        <foreach item="item" collection="list" separator=",">
+            (
+            #{articleId},
+            #{item}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteArticleLabelByArticleId">
+        delete
+        from article_label
+        where article_id = #{articleId}
+    </delete>
 
 </mapper>

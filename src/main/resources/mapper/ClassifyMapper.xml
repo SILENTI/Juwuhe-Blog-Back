@@ -10,9 +10,40 @@
         <result column="classify_description" property="classifyDescription"/>
     </resultMap>
 
+    <resultMap id="ClassifyVoMap" type="com.example.juwuheback.domain.vo.ClassifyVO" autoMapping="true">
+        <id column="classify_id" property="classifyId"/>
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        classify_id, classify_name, parent_classify_id, classify_description
+        classify_id
+        , classify_name, parent_classify_id, classify_description
     </sql>
+
+    <insert id="insertArticleClassify">
+        insert into article_classify (article_id, classify_id)
+        values (#{articleId}, #{articleId})
+    </insert>
+
+    <update id="updateArticleClassify">
+        update article_classify
+        set classify_id = #{classifyId}
+        where article_id = #{articleId}
+    </update>
+
+    <delete id="deleteArticleClassifyByArticleId">
+        delete
+        from article_classify
+        where article_id = #{articleId}
+    </delete>
+
+
+    <select id="selectAll" resultMap="ClassifyVoMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        classify
+    </select>
+
 
 </mapper>

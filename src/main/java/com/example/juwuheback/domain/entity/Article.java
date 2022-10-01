@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -23,9 +22,9 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("articles")
+@TableName("article")
 @ApiModel(value = "Articles对象", description = "")
-public class Articles implements Serializable {
+public class Article implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

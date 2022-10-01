@@ -2,10 +2,12 @@ package com.example.juwuheback.domain.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -15,8 +17,7 @@ import java.io.Serializable;
  * @author 居無何
  * @since 2022-08-20
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "Classify对象", description = "")
 public class ClassifyVO implements Serializable {
 
@@ -34,5 +35,7 @@ public class ClassifyVO implements Serializable {
     @ApiModelProperty("分类描述")
     private String classifyDescription;
 
+    @ApiModelProperty("子类所属")
+    private List<ClassifyVO> childrenClassify;
 
 }

@@ -1,23 +1,21 @@
 package com.example.juwuheback.domain.dto;
 
-import com.example.juwuheback.common.action.ArticlesAction;
+import com.example.juwuheback.common.action.ArticleAction;
 import com.example.juwuheback.common.domain.PageParamDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class ArticlesQueryDTO extends PageParamDTO implements Serializable {
+public class ArticleQueryDTO extends PageParamDTO {
 
-    private static final long serialVersionUID = -4757888911683594030L;
-
-    @ApiModelProperty("博文ID")
+    @NotNull(groups = {ArticleAction.queryDetail.class}, message = "文章ID不能为NULL")
+    @ApiModelProperty("文章ID")
     private Integer articleId;
 
-    @ApiModelProperty("博文标题")
+    @ApiModelProperty("文章标题")
     private String articleTitle;
 
     @ApiModelProperty("开始时间")
@@ -26,7 +24,10 @@ public class ArticlesQueryDTO extends PageParamDTO implements Serializable {
     @ApiModelProperty("结束时间")
     private Date endTime;
 
-    @NotNull(groups = {ArticlesAction.queryArticlesLabel.class}, message = "标签Id不能为NULL")
+    @ApiModelProperty("是否发表")
+    private Integer isPublish;
+
+    @NotNull(groups = {ArticleAction.queryLabel.class}, message = "标签Id不能为NULL")
     @ApiModelProperty("标签ID")
     private Integer labelId;
 

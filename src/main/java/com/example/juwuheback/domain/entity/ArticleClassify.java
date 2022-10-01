@@ -19,9 +19,9 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("articles_classify")
-@ApiModel(value = "ArticlesClassify对象", description = "")
-public class ArticlesClassify implements Serializable {
+@TableName("article_classify")
+@ApiModel(value = "ArticleClassify对象", description = "")
+public class ArticleClassify implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,6 +30,5 @@ public class ArticlesClassify implements Serializable {
 
     @ApiModelProperty("分类ID")
     private Integer classifyId;
-
 
 }

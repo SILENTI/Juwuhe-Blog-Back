@@ -21,9 +21,9 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("articles_labels")
+@TableName("article_label")
 @ApiModel(value = "ArticlesLabels对象", description = "")
-public class ArticlesLabel implements Serializable {
+public class ArticleLabel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

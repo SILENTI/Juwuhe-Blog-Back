@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.juwuheback.mapper.ArticleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="ArticleVOMap" type="com.example.juwuheback.domain.vo.ArticleVO">
+        <id column="article_id" property="articleId"/>
+        <collection property="labelVOList" select="selectLabelByArticleId" column="article_id"/>
+    </resultMap>
+
+    <!--标签结果集映射-->
+    <resultMap id="LabelVOMap" type="com.example.juwuheback.domain.vo.LabelVO">
+        <id column="label_id" property="labelId"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Article_Column_List">
+        art
+        .
+        article_id
+        ,
+        art.article_title,
+        art.article_content,
+        art.article_img,
+        art.article_description,
+        art.article_views,
+        art.article_comment_count,
+        art.article_publish_date,
+        art.is_publish
+    </sql>
+
+    <sql id="Label_Column_List">
+        la
+        .
+        label_id
+        ,
+        la.label_name,
+        la.label_description
+    </sql>
+
+    <select id="selectAllArticle" resultMap="ArticleVOMap">
+        SELECT
+        <include refid="Article_Column_List"></include>
+        FROM article art
+        <where>
+            <if test=" articleQueryDTO.isPublish != null ">
+                and art.is_publish = #{articleQueryDTO.isPublish}
+            </if>
+            <if test=" articleQueryDTO.articleId != null ">
+                and art.article_id = #{articleQueryDTO.articleId}
+            </if>
+            <if test=" articleQueryDTO.articleId != null ">
+                and art.article_title like ('%' #{articleQueryDTO.articleTitle} '%')
+            </if>
+            <if test=" articleQueryDTO.startTime != null and articleQueryDTO.endTime != null">
+                and art.article_date between #{articleQueryDTO.startTime} and #{articleQueryDTO.endTime}
+            </if>
+        </where>
+        ORDER BY art.article_create_date DESC
+    </select>
+
+    <select id="selectLabelByArticleId" resultMap="LabelVOMap">
+        select
+        <include refid="Label_Column_List"></include>
+        FROM
+        article_label artl
+        LEFT JOIN
+        label la
+        ON
+        artl.label_id = la.label_id
+        where artl.article_id = #{labelId}
+    </select>
+
+
+    <select id="selectAllByLabel" resultMap="ArticleVOMap">
+        SELECT
+        <include refid="Article_Column_List"></include>,
+        <include refid="Label_Column_List"></include>
+        FROM
+        article AS art
+        LEFT JOIN
+        article_label AS artl
+        ON
+        art.article_id = artl.article_id
+        LEFT JOIN
+        label AS la
+        ON
+        artl.label_id = la.label_id
+        <where>
+            <if test=" articleQueryDTO.labelId != null ">
+                art.article_id IN
+                (
+                SELECT
+                al.article_id
+                FROM
+                article_label al
+                WHERE
+                al.label_id = #{articleQueryDTO.labelId}
+                )
+            </if>
+            <if test=" articleQueryDTO.labelName != null ">
+                and la.label_name = #{articleQueryDTO.labelName}
+            </if>
+        </where>
+        ORDER BY art.article_create_date DESC
+    </select>
+
+</mapper>
