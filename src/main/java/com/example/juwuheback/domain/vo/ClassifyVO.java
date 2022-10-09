@@ -35,6 +35,8 @@ public class ClassifyVO implements Serializable {
     @ApiModelProperty("分类描述")
     private String classifyDescription;
 
+    private List<ArticleVO> articleVOList;
+
     @ApiModelProperty("子类所属")
     private List<ClassifyVO> childrenClassify;
 

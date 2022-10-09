@@ -54,4 +54,11 @@ public interface ClassifyMapper extends BaseMapper<Classify> {
      * @return
      */
     List<ClassifyVO> selectAll();
+
+    /**
+     * 查询文章信息及其所属分类
+     *
+     * @return
+     */
+    List<ClassifyVO> selectArticleAndClassify();
 }

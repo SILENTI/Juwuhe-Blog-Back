@@ -11,4 +11,6 @@ public interface IClassifyService extends IService<Classify> {
 
     ResponseDTO<List<ClassifyVO>> queryAllClassify();
 
+    ResponseDTO<List<ClassifyVO>> queryArticleAndClassify();
+
 }

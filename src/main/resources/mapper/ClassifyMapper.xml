@@ -12,6 +12,9 @@
 
     <resultMap id="ClassifyVoMap" type="com.example.juwuheback.domain.vo.ClassifyVO" autoMapping="true">
         <id column="classify_id" property="classifyId"/>
+        <collection property="articleVOList" ofType="com.example.juwuheback.domain.vo.ArticleVO" autoMapping="true">
+            <id column="article_id" property="articleId"/>
+        </collection>
     </resultMap>
 
     <!-- 通用查询结果列 -->
@@ -43,6 +46,28 @@
         <include refid="Base_Column_List"/>
         from
         classify
+    </select>
+
+
+    <select id="selectArticleAndClassify" resultMap="ClassifyVoMap">
+        SELECT classify.classify_id,
+               classify.classify_name,
+               classify.parent_classify_id,
+               article.article_id,
+               article.article_title,
+               article.article_description,
+               article.article_publish_date,
+               article.is_publish,
+               article.article_create_date
+        FROM classify
+                 LEFT JOIN
+             article_classify
+             ON
+                 classify.classify_id = article_classify.classify_id
+                 LEFT JOIN
+             article
+             ON
+                 article_classify.article_id = article.article_id
     </select>
 
 
