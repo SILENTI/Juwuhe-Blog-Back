@@ -14,4 +14,10 @@ public interface ClassifyAction {
     interface add {
     }
 
+    /**
+     * 删除分类信息
+     */
+    interface remove {
+    }
+
 }

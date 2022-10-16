@@ -2,6 +2,7 @@ package com.example.juwuheback.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.juwuheback.common.domain.ResponseDTO;
+import com.example.juwuheback.domain.dto.ClassifyDTO;
 import com.example.juwuheback.domain.entity.Classify;
 import com.example.juwuheback.domain.vo.ClassifyVO;
 
@@ -12,5 +13,7 @@ public interface IClassifyService extends IService<Classify> {
     ResponseDTO<List<ClassifyVO>> queryAllClassify();
 
     ResponseDTO<List<ClassifyVO>> queryArticleAndClassify();
+
+    ResponseDTO removeClassify(List<Integer> classifyIdList);
 
 }

@@ -6,8 +6,6 @@ import com.example.juwuheback.domain.vo.ClassifyVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -61,4 +59,12 @@ public interface ClassifyMapper extends BaseMapper<Classify> {
      * @return
      */
     List<ClassifyVO> selectArticleAndClassify();
+
+    /**
+     * 批量删除文章关联的分类信息的内容
+     *
+     * @param classifyIdList
+     * @return
+     */
+    Integer deleteBatchArticleClassifyIds(@Param("list") List<Integer> classifyIdList);
 }

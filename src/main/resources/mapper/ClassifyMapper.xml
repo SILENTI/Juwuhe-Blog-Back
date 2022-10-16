@@ -40,6 +40,13 @@
         where article_id = #{articleId}
     </delete>
 
+    <delete id="deleteBatchArticleClassifyIds">
+        delete from article_classify where classify_id in
+        <foreach item="item" collection="list" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+
 
     <select id="selectAll" resultMap="ClassifyVoMap">
         select

@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class ClassifyDTO {
 
-    @NotNull(groups = {ClassifyAction.update.class}, message = "分类的ID不能为NULL")
+    @NotNull(groups = {ClassifyAction.update.class, ClassifyAction.remove.class}, message = "分类的ID不能为NULL")
     @ApiModelProperty("分类ID")
     private Integer classifyId;
 

@@ -2,12 +2,15 @@ package com.example.juwuheback.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.juwuheback.common.domain.ResponseDTO;
+import com.example.juwuheback.domain.dto.ClassifyDTO;
 import com.example.juwuheback.domain.entity.Classify;
 import com.example.juwuheback.domain.vo.ClassifyVO;
 import com.example.juwuheback.mapper.ClassifyMapper;
 import com.example.juwuheback.service.IClassifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,5 +97,24 @@ public class ClassifyServiceImpl extends ServiceImpl<ClassifyMapper, Classify> i
         });
 
         return ResponseDTO.success(levelOneMenus);
+    }
+
+
+    /**
+     * 删除分类信息
+     *
+     * @return
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public ResponseDTO removeClassify(List<Integer> classifyIdList) {
+
+        //删除分类表中的信息
+        classifyMapper.deleteBatchIds(classifyIdList);
+
+        //删除文章和分类关联表中的信息
+        classifyMapper.deleteBatchArticleClassifyIds(classifyIdList);
+
+        return ResponseDTO.success();
     }
 }

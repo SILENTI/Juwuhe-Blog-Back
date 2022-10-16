@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -59,6 +60,12 @@ public class ClassifyController {
     @PostMapping("/queryInfo")
     public ResponseDTO<List<ClassifyVO>> queryArticleAndClassify() {
         return classifyService.queryArticleAndClassify();
+    }
+
+    @ApiOperation(value = "删除分类信息")
+    @PostMapping("/remove")
+    public ResponseDTO removeClassify(@RequestBody @Validated @NotNull(message = "分类ID不能为NULL") List<Integer> classifyIdList) {
+        return classifyService.removeClassify(classifyIdList);
     }
 
 }
