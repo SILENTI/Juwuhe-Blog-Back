@@ -40,7 +40,15 @@
 
     <select id="selectAllArticle" resultMap="ArticleVOMap">
         SELECT
-        <include refid="Article_Column_List"></include>
+        art.article_id,
+        art.article_title,
+        art.article_img,
+        art.article_description,
+        art.article_views,
+        art.article_comment_count,
+        art.article_publish_date,
+        art.article_create_date,
+        art.is_publish
         FROM article art
         <where>
             <if test=" articleQueryDTO.isPublish != null ">
