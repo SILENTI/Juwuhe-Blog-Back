@@ -21,6 +21,12 @@ public interface ArticleAction {
     }
 
     /**
+     * 保存编辑
+     */
+    interface saveEdit {
+    }
+
+    /**
      * 删除博文
      */
     interface remove {

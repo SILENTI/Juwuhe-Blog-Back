@@ -3,16 +3,22 @@
 <mapper namespace="com.example.juwuheback.mapper.LabelMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.example.juwuheback.domain.entity.Label">
+    <resultMap id="BaseResultMap" type="com.example.juwuheback.domain.entity.Label" autoMapping="true">
         <id column="label_id" property="labelId"/>
-        <result column="label_name" property="labelName"/>
-        <result column="label_description" property="labelDescription"/>
+    </resultMap>
+
+    <resultMap id="LabelVOResultMap" type="com.example.juwuheback.domain.vo.LabelVO" autoMapping="true">
+        <id column="label_id" property="labelId"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
+        label
+        .
         label_id
-        , label_name, label_description
+        ,
+        label.label_name,
+        label.label_description
     </sql>
 
     <insert id="insertArticleLabel">
@@ -32,5 +38,19 @@
         from article_label
         where article_id = #{articleId}
     </delete>
+
+
+    <select id="selectLabelsByArticleId" resultMap="LabelVOResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        article_label
+        LEFT JOIN
+        label
+        ON
+        article_label.label_id = label.label_id
+        WHERE
+        article_label.article_id = #{articleId}
+    </select>
 
 </mapper>

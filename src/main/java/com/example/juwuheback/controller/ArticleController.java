@@ -7,6 +7,7 @@ import com.example.juwuheback.domain.dto.ArticleDTO;
 import com.example.juwuheback.domain.dto.ArticleQueryDTO;
 import com.example.juwuheback.domain.vo.ArticleVO;
 import com.example.juwuheback.service.IArticleService;
+import com.example.juwuheback.service.ILabelsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,21 +46,21 @@ public class ArticleController {
     }
 
     @PostMapping("/queryArticle")
-    @ApiOperation(value = "前台-查询文章详情-HTML")
-    public ResponseDTO queryArticleDetailHTML(@RequestBody @Validated(ArticleAction.queryDetail.class) ArticleQueryDTO articleQueryDTO) {
-        return articleService.queryDetail(articleQueryDTO);
-    }
-
-    @PostMapping("/queryArticleDetail")
-    @ApiOperation(value = "后台-查询文章详情-MarkDown")
+    @ApiOperation(value = "前后台-查询文章详情")
     public ResponseDTO queryArticleDetail(@RequestBody @Validated(ArticleAction.queryDetail.class) ArticleQueryDTO articleQueryDTO) {
-        return null;
+        return articleService.queryDetail(articleQueryDTO);
     }
 
     @PostMapping("/save")
     @ApiOperation(value = "后台-保存文章")
     public ResponseDTO saveArticle(@RequestBody @Validated(ArticleAction.save.class) ArticleDTO articleDTO) {
         return articleService.saveArticle(articleDTO);
+    }
+
+    @PostMapping("/saveEdit")
+    @ApiOperation(value = "后台-保存文航编辑")
+    public ResponseDTO saveEdit(@RequestBody @Validated(ArticleAction.saveEdit.class) ArticleDTO articleDTO) {
+        return articleService.saveEditArticle(articleDTO);
     }
 
     @PostMapping("/remove")

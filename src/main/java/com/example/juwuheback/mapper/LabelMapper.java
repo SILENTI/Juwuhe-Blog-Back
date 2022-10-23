@@ -2,6 +2,7 @@ package com.example.juwuheback.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.juwuheback.domain.entity.Label;
+import com.example.juwuheback.domain.vo.LabelVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -34,6 +35,14 @@ public interface LabelMapper extends BaseMapper<Label> {
      * @return
      */
     Integer deleteArticleLabelByArticleId(@Param("articleId") Integer articlesId);
+
+    /**
+     * 更具文章Id查询文章所有标签信息
+     *
+     * @param articleId 文章ID
+     * @return
+     */
+    List<LabelVO> selectLabelsByArticleId(@Param("articleId") Integer articleId);
 
 
 }

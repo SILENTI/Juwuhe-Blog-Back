@@ -61,6 +61,14 @@ public interface ClassifyMapper extends BaseMapper<Classify> {
     List<ClassifyVO> selectArticleAndClassify();
 
     /**
+     * 根据文章ID查询分类，文章所属分类信息
+     *
+     * @param articleId
+     * @return
+     */
+    ClassifyVO selectByArticleId(@Param("articled") Integer articleId);
+
+    /**
      * 批量删除文章关联的分类信息的内容
      *
      * @param classifyIdList

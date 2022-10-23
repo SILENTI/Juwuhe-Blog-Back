@@ -40,4 +40,5 @@ public interface ArticleMapper extends BaseMapper<Article> {
      */
     List<ArticleVO> selectAllByLabel(@Param("articleQueryDTO") ArticleQueryDTO articleQueryDTO);
 
+
 }

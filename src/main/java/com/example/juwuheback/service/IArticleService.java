@@ -12,11 +12,11 @@ public interface IArticleService extends IService<Article> {
 
     ResponseDTO queryDetail(ArticleQueryDTO articleQueryDTO);
 
-    ResponseDTO queryArticleDetail(ArticleQueryDTO articleQueryDTO);
-
     ResponseDTO queryAllByLabel(ArticleQueryDTO articleQueryDTO);
 
     ResponseDTO saveArticle(ArticleDTO articleDTO);
+
+    ResponseDTO saveEditArticle(ArticleDTO articleDTO);
 
     ResponseDTO removeArticle(ArticleDTO articleDTO);
 

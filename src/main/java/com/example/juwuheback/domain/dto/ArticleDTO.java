@@ -14,22 +14,23 @@ import java.util.List;
 @Data
 public class ArticleDTO {
 
-    @NotNull(groups = {ArticleAction.remove.class, ArticleAction.edit.class, ArticleAction.upload.class}, message = "文章ID不能为NULL")
+    @NotNull(groups = {ArticleAction.remove.class, ArticleAction.saveEdit.class, ArticleAction.edit.class, ArticleAction.upload.class}, message = "文章ID不能为NULL")
+    @ApiModelProperty("文章Id")
     private Integer articleId;
 
-    @NotBlank(groups = {ArticleAction.save.class, ArticleAction.edit.class, ArticleAction.upload.class}, message = "文章标题不能为NULL")
+    @NotBlank(groups = {ArticleAction.save.class, ArticleAction.saveEdit.class, ArticleAction.edit.class, ArticleAction.upload.class}, message = "文章标题不能为NULL")
     @ApiModelProperty("文章标题")
     private String articleTitle;
 
-    @NotBlank(groups = {ArticleAction.save.class, ArticleAction.edit.class}, message = "文章内容不能为NULL")
+    @NotBlank(groups = {ArticleAction.save.class, ArticleAction.saveEdit.class, ArticleAction.edit.class}, message = "文章内容不能为NULL")
     @ApiModelProperty("文章内容")
     private String articleContent;
 
-    @NotBlank(groups = {ArticleAction.save.class, ArticleAction.edit.class, ArticleAction.upload.class}, message = "文章封面不能为NULL")
+    @NotBlank(groups = {ArticleAction.save.class, ArticleAction.saveEdit.class, ArticleAction.edit.class, ArticleAction.upload.class}, message = "文章封面不能为NULL")
     @ApiModelProperty("文章封面")
     private String articleImg;
 
-    @NotBlank(groups = {ArticleAction.save.class, ArticleAction.edit.class, ArticleAction.upload.class}, message = "文章描述不能为NULL")
+    @NotBlank(groups = {ArticleAction.save.class, ArticleAction.saveEdit.class, ArticleAction.edit.class, ArticleAction.upload.class}, message = "文章描述不能为NULL")
     @ApiModelProperty("文章描述")
     private String articleDescription;
 
@@ -48,11 +49,11 @@ public class ArticleDTO {
     @ApiModelProperty("是否发表")
     private Integer isPublish;
 
-    @NotNull(groups = {ArticleAction.save.class, ArticleAction.edit.class, ArticleAction.upload.class}, message = "文章分类不能为NULL")
+    @NotNull(groups = {ArticleAction.save.class, ArticleAction.saveEdit.class, ArticleAction.edit.class, ArticleAction.upload.class}, message = "文章分类不能为NULL")
     @ApiModelProperty("所属分类")
     private Integer classifyId;
 
-    @NotEmpty(groups = {ArticleAction.save.class, ArticleAction.edit.class, ArticleAction.upload.class}, message = "文章所属标签不能为NULL")
+    @NotEmpty(groups = {ArticleAction.save.class, ArticleAction.saveEdit.class, ArticleAction.edit.class, ArticleAction.upload.class}, message = "文章所属标签不能为NULL")
     @ApiModelProperty("所属标签ID")
     private List<Integer> labelList;
 

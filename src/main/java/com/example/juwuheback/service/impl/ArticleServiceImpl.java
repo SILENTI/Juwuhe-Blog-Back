@@ -1,5 +1,6 @@
 package com.example.juwuheback.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.juwuheback.common.domain.PageResultDTO;
@@ -9,6 +10,8 @@ import com.example.juwuheback.domain.dto.ArticleDTO;
 import com.example.juwuheback.domain.dto.ArticleQueryDTO;
 import com.example.juwuheback.domain.entity.Article;
 import com.example.juwuheback.domain.vo.ArticleVO;
+import com.example.juwuheback.domain.vo.ClassifyVO;
+import com.example.juwuheback.domain.vo.LabelVO;
 import com.example.juwuheback.mapper.ArticleMapper;
 import com.example.juwuheback.mapper.ClassifyMapper;
 import com.example.juwuheback.mapper.LabelMapper;
@@ -31,6 +34,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -75,25 +79,20 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public ResponseDTO queryDetail(ArticleQueryDTO articleQueryDTO) {
 
+
+        //文章信息
         Article article = articleMapper.selectById(articleQueryDTO.getArticleId());
         ArticleVO articleVO = SmartBeanUtil.copy(article, ArticleVO.class);
 
-        //将MarkDown语法转化为HTMl
-//        articleVO.setArticleContent(MdToHtmlUtils.convert(article.getArticleContent()));
-        articleVO.setArticleContent(MarkdownUtils.markdownToHtmlExtensions(articleVO.getArticleContent()));
+        //文章分类
+        ClassifyVO classifyVO = classifyMapper.selectByArticleId(articleQueryDTO.getArticleId());
+        articleVO.setClassifyVO(classifyVO);
+
+        //文章标签
+        List<LabelVO> labelVOS = labelMapper.selectLabelsByArticleId(articleQueryDTO.getArticleId());
+        articleVO.setLabelVOList(labelVOS);
 
         return ResponseDTO.success(articleVO);
-    }
-
-    /**
-     * 查询文章详情
-     *
-     * @param articleQueryDTO
-     * @return
-     */
-    @Override
-    public ResponseDTO queryArticleDetail(ArticleQueryDTO articleQueryDTO) {
-        return ResponseDTO.success(articleMapper.selectById(articleQueryDTO.getArticleId()));
     }
 
     /**
@@ -134,6 +133,31 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         if (ObjectUtils.isEmpty(article.getArticleId()) || labelMapper.insertArticleLabel(article.getArticleId(), articleDTO.getLabelList()) < 1 || classifyMapper.insertArticleClassify(article.getArticleId(), articleDTO.getClassifyId()) < 1) {
             return ResponseDTO.fail(ExceptionEnum.DATABASE_OPERATION_ERROR);
         }
+
+        return ResponseDTO.success();
+    }
+
+    /**
+     * 保存编辑器修改的文章
+     *
+     * @param articleDTO
+     * @return
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public ResponseDTO saveEditArticle(ArticleDTO articleDTO) {
+
+        //更新文章信息
+        Article article = SmartBeanUtil.copy(articleDTO, Article.class);
+        articleMapper.updateById(article);
+
+
+        //更新分类信息
+        classifyMapper.updateArticleClassify(articleDTO.getArticleId(), articleDTO.getClassifyId());
+
+        //更新标签信息-先删除后直接插入
+        labelMapper.deleteArticleLabelByArticleId(articleDTO.getArticleId());
+        labelMapper.insertArticleLabel(articleDTO.getArticleId(), articleDTO.getLabelList());
 
         return ResponseDTO.success();
     }

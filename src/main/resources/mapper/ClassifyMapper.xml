@@ -10,12 +10,17 @@
         <result column="classify_description" property="classifyDescription"/>
     </resultMap>
 
-    <resultMap id="ClassifyVoMap" type="com.example.juwuheback.domain.vo.ClassifyVO" autoMapping="true">
+    <resultMap id="ClassifyVOSMap" type="com.example.juwuheback.domain.vo.ClassifyVO" autoMapping="true">
         <id column="classify_id" property="classifyId"/>
         <collection property="articleVOList" ofType="com.example.juwuheback.domain.vo.ArticleVO" autoMapping="true">
             <id column="article_id" property="articleId"/>
         </collection>
     </resultMap>
+
+    <resultMap id="ClassifyVOMap" type="com.example.juwuheback.domain.vo.ClassifyVO" autoMapping="true">
+        <id column="classify_id" property="classifyId"/>
+    </resultMap>
+
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
@@ -48,7 +53,7 @@
     </delete>
 
 
-    <select id="selectAll" resultMap="ClassifyVoMap">
+    <select id="selectAll" resultMap="ClassifyVOSMap">
         select
         <include refid="Base_Column_List"/>
         from
@@ -56,7 +61,7 @@
     </select>
 
 
-    <select id="selectArticleAndClassify" resultMap="ClassifyVoMap">
+    <select id="selectArticleAndClassify" resultMap="ClassifyVOSMap">
         SELECT classify.classify_id,
                classify.classify_name,
                classify.parent_classify_id,
@@ -75,6 +80,19 @@
              article
              ON
                  article_classify.article_id = article.article_id
+    </select>
+
+    <select id="selectByArticleId" resultMap="ClassifyVOMap">
+        SELECT classify.classify_id,
+               classify.classify_name,
+               classify.parent_classify_id,
+               classify.classify_description
+        FROM article_classify
+                 LEFT JOIN
+             classify
+             ON
+                 article_classify.classify_id = classify.classify_id
+        where article_classify.article_id = #{articled}
     </select>
 
 

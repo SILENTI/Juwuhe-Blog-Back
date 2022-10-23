@@ -3,15 +3,25 @@
 <mapper namespace="com.example.juwuheback.mapper.ArticleMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="ArticleVOMap" type="com.example.juwuheback.domain.vo.ArticleVO">
+    <resultMap id="ArticlePageVOMap" type="com.example.juwuheback.domain.vo.ArticleVO" autoMapping="true">
         <id column="article_id" property="articleId"/>
         <collection property="labelVOList" select="selectLabelByArticleId" column="article_id"/>
     </resultMap>
 
+    <resultMap id="ArticleVOMap" type="com.example.juwuheback.domain.vo.ArticleVO" autoMapping="true">
+        <id column="article_id" property="articleId"/>
+    </resultMap>
+
+    <!--分类结果映射-->
+    <resultMap id="ClassifyVOMap" type="com.example.juwuheback.domain.vo.ClassifyVO" autoMapping="true">
+        <id column="classify_id" property="classifyId"/>
+    </resultMap>
+
     <!--标签结果集映射-->
-    <resultMap id="LabelVOMap" type="com.example.juwuheback.domain.vo.LabelVO">
+    <resultMap id="LabelVOMap" type="com.example.juwuheback.domain.vo.LabelVO" autoMapping="true">
         <id column="label_id" property="labelId"/>
     </resultMap>
+
 
     <!-- 通用查询结果列 -->
     <sql id="Article_Column_List">
@@ -26,7 +36,18 @@
         art.article_views,
         art.article_comment_count,
         art.article_publish_date,
+        art.article_create_date,
         art.is_publish
+    </sql>
+
+    <sql id="Classify_Colum_List">
+        cl
+        .
+        classify_id
+        ,
+        cl.classify_name,
+        cl.parent_classify_id,
+        cl.classify_description,
     </sql>
 
     <sql id="Label_Column_List">
@@ -38,17 +59,9 @@
         la.label_description
     </sql>
 
-    <select id="selectAllArticle" resultMap="ArticleVOMap">
+    <select id="selectAllArticle" resultMap="ArticlePageVOMap">
         SELECT
-        art.article_id,
-        art.article_title,
-        art.article_img,
-        art.article_description,
-        art.article_views,
-        art.article_comment_count,
-        art.article_publish_date,
-        art.article_create_date,
-        art.is_publish
+        <include refid="Article_Column_List"/>
         FROM article art
         <where>
             <if test=" articleQueryDTO.isPublish != null ">
@@ -67,50 +80,82 @@
         ORDER BY art.article_create_date DESC
     </select>
 
+    <select id="selectClassifyByArticleId" resultMap="ClassifyVOMap">
+        SELECT
+        <include refid="Classify_Colum_List"/>
+        FROM
+        article_classify artc
+        LEFT JOIN
+        classify cl
+        ON
+        artc.classify_id = cl.classify_id
+        WHERE
+        artc.articl_id = #{articleId}
+    </select>
+
     <select id="selectLabelByArticleId" resultMap="LabelVOMap">
         select
-        <include refid="Label_Column_List"></include>
+        <include refid="Label_Column_List"/>
         FROM
         article_label artl
         LEFT JOIN
         label la
         ON
         artl.label_id = la.label_id
-        where artl.article_id = #{labelId}
+        where artl.article_id = #{articleId}
+    </select>
+
+    <select id="selectAllByLabel" resultMap="ArticlePageVOMap">
+        SELECT article.article_id,
+               article.article_title,
+               article.article_content,
+               article.article_img,
+               article.article_description,
+               article.article_views,
+               article.article_comment_count,
+               article.article_publish_date,
+               article.is_publish
+        FROM article
+                 LEFT JOIN
+             article_label
+             ON
+                 article.article_id = article_label.article_id
+        WHERE article_label.label_id = #{articleQueryDTO.labelId}
+        ORDER BY article.article_publish_date DESC
     </select>
 
 
-    <select id="selectAllByLabel" resultMap="ArticleVOMap">
-        SELECT
-        <include refid="Article_Column_List"></include>,
-        <include refid="Label_Column_List"></include>
-        FROM
-        article AS art
-        LEFT JOIN
-        article_label AS artl
-        ON
-        art.article_id = artl.article_id
-        LEFT JOIN
-        label AS la
-        ON
-        artl.label_id = la.label_id
-        <where>
-            <if test=" articleQueryDTO.labelId != null ">
-                art.article_id IN
-                (
-                SELECT
-                al.article_id
-                FROM
-                article_label al
-                WHERE
-                al.label_id = #{articleQueryDTO.labelId}
-                )
-            </if>
-            <if test=" articleQueryDTO.labelName != null ">
-                and la.label_name = #{articleQueryDTO.labelName}
-            </if>
-        </where>
-        ORDER BY art.article_create_date DESC
-    </select>
+    <!-- <select id="selectAllByLabel" resultMap="ArticleVOMap">
+         SELECT
+         <include refid="Article_Column_List"></include>,
+         <include refid="Label_Column_List"></include>
+         FROM
+         article AS art
+         LEFT JOIN
+         article_label AS artl
+         ON
+         art.article_id = artl.article_id
+         LEFT JOIN
+         label AS la
+         ON
+         artl.label_id = la.label_id
+         <where>
+             <if test=" articleQueryDTO.labelId != null ">
+                 art.article_id IN
+                 (
+                 SELECT
+                 al.article_id
+                 FROM
+                 article_label al
+                 WHERE
+                 al.label_id = #{articleQueryDTO.labelId}
+                 )
+             </if>
+             <if test=" articleQueryDTO.labelName != null ">
+                 and la.label_name = #{articleQueryDTO.labelName}
+             </if>
+         </where>
+         ORDER BY art.article_create_date DESC
+     </select>-->
 
 </mapper>

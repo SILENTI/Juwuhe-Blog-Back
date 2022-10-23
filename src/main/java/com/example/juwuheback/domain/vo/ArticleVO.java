@@ -35,13 +35,15 @@ public class ArticleVO {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日")
     private Date articlePublishDate;
 
-
     @ApiModelProperty("创建时间")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日")
     private Date articleCreateDate;
 
     @ApiModelProperty("所属标签")
     private List<LabelVO> labelVOList;
+
+    @ApiModelProperty("文章分类")
+    private ClassifyVO classifyVO;
 
     @ApiModelProperty("是否发布上线")
     private Integer isPublish;
